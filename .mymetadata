@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="jeecg-mybatis-framework"
+  id="myeclipse.1359602299062"
+  context-root="/jeecg-mybatis-framework"
+  j2ee-spec="5.0"
+  archive="jeecg-mybatis-framework.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+

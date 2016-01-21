@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scott.dao.demo.JeecgPersonDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="scott.entity.demo.JeecgPerson" >
+	<result column="id" property="id"/>
+	<result column="age" property="age"/>
+	<result column="name" property="name"/>
+	<result column="salary" property="salary"/>
+	<result column="createdt" property="createdt"/>
+</resultMap>
+       
+<!-- jeecg_person table all fields -->
+<sql id="Base_Column_List" >
+	 id,age,name,salary,createdt
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="age != null and age != ''" >
+	    and age =  #{age}
+	</if>
+	<if test="name != null and name != ''" >
+	    and name =  #{name}
+	</if>
+	<if test="salary != null and salary != ''" >
+	    and salary =  #{salary}
+	</if>
+	<if test="createdt != null and createdt != ''" >
+	    and createdt =  #{createdt}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+  insert into jeecg_person(id,age,name,salary,createdt)
+ values(#{id},#{age},#{name},#{salary},#{createdt})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update jeecg_person set age=#{age},name=#{name},salary=#{salary},createdt=#{createdt} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update jeecg_person set 
+	<trim  suffixOverrides="," >
+	<if test="age != null  ">
+		age=#{age},
+	</if>
+	<if test="name != null  ">
+		name=#{name},
+	</if>
+	<if test="salary != null  ">
+		salary=#{salary},
+	</if>
+	<if test="createdt != null  ">
+		createdt=#{createdt},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete 	 from jeecg_person where id = #{id}
+</delete>
+ 
+<!-- 根据id查询 会员 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from jeecg_person where id = #{id}
+</select>
+
+<!-- 会员 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from jeecg_person 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询会员列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from jeecg_person 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+  	
+</mapper>   

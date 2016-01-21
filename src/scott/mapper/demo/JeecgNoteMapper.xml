@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scott.dao.demo.JeecgNoteDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="scott.entity.demo.JeecgNote" >
+	<result column="id" property="id"/>
+	<result column="title" property="title"/>
+	<result column="content" property="content"/>
+	<result column="crtuser" property="crtuser"/>
+	<result column="crtuser_name" property="crtuser_name"/>
+	<result column="create_dt" property="create_dt"/>
+	<result column="deleted" property="deleted"/>
+</resultMap>
+       
+<!-- jeecg_note table all fields -->
+<sql id="Base_Column_List" >
+	 id,title,content,crtuser,crtuser_name,create_dt,deleted
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="title != null and title != ''" >
+	    and title =  #{title}
+	</if>
+	<if test="content != null and content != ''" >
+	    and content =  #{content}
+	</if>
+	<if test="crtuser != null and crtuser != ''" >
+	    and crtuser =  #{crtuser}
+	</if>
+	<if test="crtuser_name != null and crtuser_name != ''" >
+	    and crtuser_name =  #{crtuser_name}
+	</if>
+	<if test="create_dt != null and create_dt != ''" >
+	    and create_dt =  #{create_dt}
+	</if>
+	<if test="deleted != null and deleted != ''" >
+	    and deleted =  #{deleted}
+	</if>
+</trim>
+</sql>
+   
+
+<!-- 插入记录 -->
+<insert id="add" parameterType="Object" >
+<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+	SELECT LAST_INSERT_ID()
+  </selectKey>
+  insert into jeecg_note(id,title,content,crtuser,crtuser_name,create_dt,deleted)
+ values(#{id},#{title},#{content},#{crtuser},#{crtuser_name},#{create_dt},#{deleted})
+</insert>
+
+<!-- 根据id，修改记录-->  
+ <update id="update" parameterType="Object" >
+  update jeecg_note set title=#{title},content=#{content},crtuser=#{crtuser},crtuser_name=#{crtuser_name},create_dt=#{create_dt},deleted=#{deleted} where id=#{id}
+ </update>
+ 
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateBySelective" parameterType="Object" >
+	update jeecg_note set 
+	<trim  suffixOverrides="," >
+	<if test="title != null  ">
+		title=#{title},
+	</if>
+	<if test="content != null  ">
+		content=#{content},
+	</if>
+	<if test="crtuser != null  ">
+		crtuser=#{crtuser},
+	</if>
+	<if test="crtuser_name != null  ">
+		crtuser_name=#{crtuser_name},
+	</if>
+	<if test="create_dt != null  ">
+		create_dt=#{create_dt},
+	</if>
+	<if test="deleted != null  ">
+		deleted=#{deleted},
+	</if>
+	</trim> where id=#{id}
+</update>
+
+<!-- 删除记录 -->
+<delete id="delete" parameterType="Object">
+	delete 	 from jeecg_note where id = #{id}
+</delete>
+ 
+<!-- 根据id查询 公告 -->
+<select id="queryById"  resultMap="BaseResultMap" parameterType="Object">
+	select <include refid="Base_Column_List" /> 
+	 from jeecg_note where id = #{id}
+</select>
+
+<!-- 公告 列表总数-->
+<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+	select count(1) from jeecg_note 
+	<include refid="Example_Where_Clause"/>
+</select>
+  	
+<!-- 查询公告列表 -->
+<select id="queryByList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from jeecg_note 
+	<include refid="Example_Where_Clause"/>
+	<if test="pager.orderCondition != null and pager.orderCondition != ''" >
+      ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+</select>
+  	
+</mapper>   
