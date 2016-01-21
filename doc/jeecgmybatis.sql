@@ -258,3 +258,18 @@ INSERT INTO `sys_user` VALUES ('1', 'admin@qq.com', 'C33367701511B4F6020EC61DED3
 INSERT INTO `sys_user` VALUES ('5', 'wolf@qq.com', 'E10ADC3949BA59ABBE56E057F20F883E', 'scott', '0', '71', '2013-02-09 10:29:42', '0', '2013-01-07 12:30:10', '2013-02-09 10:29:42', null, null, '0');
 INSERT INTO `sys_user` VALUES ('6', 'youke@qq.com', null, ' 游客', '0', null, null, '0', '2013-01-13 03:41:32', '2013-01-13 03:41:32', null, null, '0');
 INSERT INTO `sys_user` VALUES ('12', 'zhangdaihaoscot@163.com', null, null, '0', null, null, '0', '2013-02-20 11:24:28', '2013-02-20 11:24:28', null, null, '0');
+
+
+
+-- 添加新表
+
+
+CREATE TABLE `sys_department` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `department_id` bigint(20) DEFAULT NULL COMMENT '所属部门id',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '上级部门',
+  `department_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
+  `tree_level` varchar(50) DEFAULT NULL COMMENT '节点级别',
+  `is_valid` int(1) DEFAULT '1' COMMENT '是否有效',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='部门表';
