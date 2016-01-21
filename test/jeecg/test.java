@@ -11,6 +11,7 @@ public class test  {
 class Person<S, V> {
 	  public void put(S key, V value){
 		  System.out.println("");
+		  
 	  }
 }
 
