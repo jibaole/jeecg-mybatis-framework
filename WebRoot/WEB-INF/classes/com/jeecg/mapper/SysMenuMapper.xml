@@ -155,13 +155,13 @@ where 1=1   and deleted =  0
 	select id,name,url,parentId,actions from sys_menu where deleted= 0 and parentId is null
 	<if test="menuId != null" >
      and  id != #{menuId}
-    </if>
+    </if> order by rank asc
 </select>
 
 
 <!-- 获取子菜单-->
 <select id="getChildMenu"  resultMap="BaseResultMap" parameterType="Object">
-	select id,name,url,parentId,actions from sys_menu where deleted= 0 and parentId is not null
+	select id,name,url,parentId,actions from sys_menu where deleted= 0 and parentId is not null order by rank desc
 </select>
 
 <!-- 根据角色Id获取菜单（不需要父菜单） -->
